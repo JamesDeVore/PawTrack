@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\jdevo\\Documents\\Arduino\\libraries\\",
+                "C:\\Users\\jdevo\\Documents\\Arduino\\libraries**",
+                "C:\\Users\\jdevo\\Documents\\Arduino\\libraries\\SD\\src",
+                "C:\\Users\\jdevo\\Documents\\Arduino\\libraries\\GP20U7_GPS_Library\\src\\gp20u7",
+                "C:\\Users\\jdevo\\Documents\\Arduino\\libraries\\GP20U7_GPS_Library\\src"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
