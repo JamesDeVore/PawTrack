@@ -1,0 +1,11 @@
+This note will explain the database structure, and the types of data I will need to make the app
+run effectively.
+
+There are two main flavors of data, Users and Sensor data.
+
+I think Users will have the following data (columns in a database??):
+username, name, email, password HASH, imgUrl, dog breed (size), age, idNumber, friendIDs, goals?
+
+DATA will have the following data points:
+Lat (N/S), LNG (E/W), timestamp, altitude, speed, date, userID (to associate the datapoints with the user)
+
