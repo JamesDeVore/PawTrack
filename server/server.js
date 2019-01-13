@@ -4,11 +4,14 @@ Libraries to be used
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
+const cors = require("cors");
+
 
 
 //Routes
-const userRoutes = require('./routes/user')
-const dataRoutes = require('./routes/gpsData')
+const routes = require('./routes/index')
+
+app.use(cors());
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,8 +23,7 @@ TODO: make routes, set up database queries, authentication
 and a whole lot more
 =====================================================*/
 
-userRoutes(app);
-dataRoutes(app);
+routes(app)
 
 app.listen(8000, () => console.log('Listening on port 8000'))
 
