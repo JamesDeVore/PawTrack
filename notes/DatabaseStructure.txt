@@ -9,3 +9,6 @@ username, name, email, password HASH, imgUrl, dog breed (size), age, idNumber, f
 DATA will have the following data points:
 Lat (N/S), LNG (E/W), timestamp, altitude, speed, date, userID (to associate the datapoints with the user)
 
+GOOGLEKEY AIzaSyASGIF9XJ_C8mx-62QPWDDxT0BIRop-jI4
+
+DRIVE KEY AIzaSyASGIF9XJ_C8mx-62QPWDDxT0BIRop-jI4
