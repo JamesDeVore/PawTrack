@@ -3,10 +3,16 @@ Libraries to be used
 =====================================================*/
 const express = require('express');
 const app = express();
+const bodyParser = require("body-parser");
+
+
+//Routes
 const userRoutes = require('./routes/user')
 const dataRoutes = require('./routes/gpsData')
 
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 //initialize the server
 /*=====================================================
