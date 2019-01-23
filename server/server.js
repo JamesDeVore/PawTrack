@@ -5,17 +5,21 @@ const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const mongoose = require('mongoose')
+// const formidableMiddleware = require("express-formidable");
 
-
+mongoose.connect('mongodb://localhost/fitBark', { useNewUrlParser: true })
 
 //Routes
 const routes = require('./routes/index')
 
 app.use(cors());
+// app.use(formidableMiddleware());
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(bodyParser.text())
 
 //initialize the server
 /*=====================================================

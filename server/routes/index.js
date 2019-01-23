@@ -9,5 +9,7 @@ const GPSData = require('../controllers/gpsData')
 
 module.exports = function(app) {
   app.post('/register', User.registerUser);
-  app.get('/me/data', GPSData.getGPSData)
+  app.get('/me/data', GPSData.getGPSData);
+  app.get('/me/coords', GPSData.getGPSCoords)
+  app.post('/me/upload', GPSData.uploadData)
 }

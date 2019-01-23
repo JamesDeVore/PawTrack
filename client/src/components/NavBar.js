@@ -30,27 +30,27 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="dark" dark expand="xs">
+        <Navbar color="light" light expand="xs">
           <NavbarBrand href="/">Run, Myrah, Run!</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/components/">About</NavLink>
+                <NavLink href="/about">About</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">Products</NavLink>
+                <NavLink href="/products">Products</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Profile
+                  Your Data
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    Log in
+                    <NavLink href="/stream">Livestream</NavLink>
                   </DropdownItem>
                   <DropdownItem>
-                    Register
+                    <NavLink href="/data">Overtime</NavLink>
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
