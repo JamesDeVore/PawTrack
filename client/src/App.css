@@ -2,4 +2,14 @@ div {
   text-align: center;
 
 }
+#root {
+  background-color:rgb(255, 250, 245)
+}
 
+.past-map {
+  min-width:400px;
+}
+
+.c3-line {
+  stroke-width: 2px;
+}

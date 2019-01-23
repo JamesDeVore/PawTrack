@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import MapItem from './components/map'
 import Stream from './components/Stream'
 import Upload from './components/Upload'
+import YourData from './components/YourData'
 
 
 import './App.css';
@@ -21,6 +22,7 @@ class App extends Component {
           <Route exact path ='/stream' component={Stream} />
           <Route exact path='/upload' component={Upload} />
           <Route exact path='/test' component={MapItem} />
+          <Route exact path ='/data' component={YourData} />
         </Switch>
         </ BrowserRouter >
       </div>

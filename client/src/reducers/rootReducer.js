@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux'
 import {streamReducer} from './streamReducer'
 import { dataReducer } from './dataReducer';
-import { coordsReducer } from './coordsReducer';
+import { mostRecentDataReducer } from './mostRecentData';
 
 
 const rootReducer = combineReducers({
   stream:streamReducer,
   data:dataReducer,
-  coords:coordsReducer
+  recent:mostRecentDataReducer
 });
 
 export default rootReducer

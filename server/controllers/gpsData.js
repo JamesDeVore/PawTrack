@@ -4,22 +4,50 @@ EXPORT Data routes
 =====================================================*/
 const Run = require ('../Models/Run')
 const mongoose = require('mongoose');
+const {calculateTotalDistance} = require('./utils')
 
 
-exports.getGPSData = async (req,res) => {
-
+exports.getAllGPSData = async (req,res) => {
+//this will include the most recent, be sure to shift it later
+  let allRuns = await Run.find({}, {}, { sort: { 'date': -1 } });
+  let allFormattedRuns = allRuns.map(run => _formatData(run));
+  res.send(allFormattedRuns)
 }
 
-exports.getGPSCoords = async (req,res) => {
-  let run = await Run.findOne({});
+exports.getMostRecentData = async (req,res) => {
+  let run = await Run.findOne({}, {}, { sort: { 'date': -1 } });
+  let formattedData = _formatData(run)
+  
+  res.send(formattedData)
+}
+
+const _formatData = (run) => {
   let coordsArray = [];
+  let speedArray = [];
+  let timeArray = [];
+  let altitudeArray = [];
+  let date;
   run.data.forEach(element => {
     let longLatArray = [];
     longLatArray.push(element.longitude);
     longLatArray.push(element.latitude);
-    coordsArray.push(longLatArray)
-  })
-  res.send(coordsArray)
+    coordsArray.push(longLatArray);
+    speedArray.push(element.speed);
+    if(element.altitude > 60){
+    altitudeArray.push(element.altitude)}
+    timeArray.push(element.unixTime)
+  });
+  //need to remove weird dollar sign thing
+  
+  //GPS coords are finished processing
+  let runData = {
+    date: run.date,
+    coordinates: coordsArray,
+    speed: speedArray,
+    altitude: altitudeArray,
+    time: timeArray
+  }
+  return runData
 }
 
 exports.uploadData = async (req,res) => {

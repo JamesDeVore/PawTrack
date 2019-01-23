@@ -49,8 +49,8 @@ class Upload extends Component {
     // console.log(this.props)
     return (
       <div>
-        <button onClick={() => this.connectBTDevice()}>Upload</button>
-        <button onClick={() => this.props.uploadData(this.state.activityData)}>Submit Data</button>
+        <button className="btn btn-info" onClick={() => this.connectBTDevice()}>Upload</button>
+        <button className="btn btn-info" onClick={() => this.props.uploadData(this.state.activityData)}>Submit Data</button>
       </div>
     )
   }
