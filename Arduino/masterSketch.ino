@@ -54,7 +54,7 @@ long number = 0;
 void setup(void)
 {
   //this is hopefully not necessary, but works bettwe with it
-//   while (!Serial);
+  //   while (!Serial);
   //   ; // required for Flora & Micro
   delay(500);
 
@@ -64,18 +64,19 @@ void setup(void)
 
   /* Initialise the module */
   Serial.print(F("Initialising the Bluefruit LE module: "));
-  
-  if ( !ble.begin(VERBOSE_MODE) )
+
+  if (!ble.begin(VERBOSE_MODE))
   {
     //error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
   }
-  Serial.println( F("OK!") );
+  Serial.println(F("OK!"));
 
-  if ( FACTORYRESET_ENABLE )
+  if (FACTORYRESET_ENABLE)
   {
     /* Perform a factory reset to make sure everything is in a known state */
     Serial.println(F("Performing a factory reset: "));
-    if ( ! ble.factoryReset() ){
+    if (!ble.factoryReset())
+    {
       //error(F("Couldn't factory reset"));
     }
   }
@@ -114,7 +115,6 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
-
   Serial.print("Initializing SD card...");
 
   if (!SD.begin(10))
@@ -139,21 +139,26 @@ void loop(void)
 {
   number++;
   Serial.println(number);
-  if(mode == 2) {
+  if (mode == 2)
+  {
     streamData();
-    }
-  
-  if(mode == 1){
+  }
+
+  if (mode == 1)
+  {
     readAndSendFile();
   }
-  if(mode ==0){
+  if (mode == 0)
+  {
     GPSReadAndLog();
   }
-  if(mode ==4) {
-    if(SD.exists(fileName)){
+  if (mode == 4)
+  {
+    if (SD.exists(fileName))
+    {
       SD.remove(fileName);
-      }
     }
+  }
 }
 
 void GPSSetup()
@@ -164,8 +169,9 @@ void GPSSetup()
   rtc.begin();
 }
 
-void streamData() {
-    //RTC date object
+void streamData()
+{
+  //RTC date object
   DateTime now = rtc.now();
 
   while (Serial1.available() > 0)
@@ -197,14 +203,15 @@ void streamData() {
         dataString.concat(',');
         dataString.concat(currentUnixTime);
         dataString.concat('$');
-     
-  for(int i=0; i< dataString.length(); i++){
-      ble.print(dataString[i]);
-      delay(20);
+
+        for (int i = 0; i < dataString.length(); i++)
+        {
+          ble.print(dataString[i]);
+          delay(20);
+        }
+        delay(70);
+      }
     }
-    delay(70);
-  }
- }
 }
 
 void readAndSendFile()
@@ -219,14 +226,13 @@ void readAndSendFile()
     {
       Serial.println(myFile.peek());
       ble.write(myFile.read());
-     
-      
     }
     // close the file:
     myFile.close();
     ble.print("#");
     Serial.println("DONE");
-    while(true);
+    while (true)
+      ;
   }
   else
   {

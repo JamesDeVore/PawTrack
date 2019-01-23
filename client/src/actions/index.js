@@ -4,7 +4,6 @@ export const fetchCoords = () => async dispatch => {
   console.log("fetching?")
  let data = await fetch('http://localhost:8000/me/coords')
  let recievedData = await data.json();
- console.log(recievedData)
  let parsedArray = recievedData.map(element => {
    let newDataArray = [];
    newDataArray.push(parseFloat(element[0]['$numberDecimal']));
