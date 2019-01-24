@@ -39,8 +39,19 @@ export const fetchMostRecentData = () => async dispatch => {
 
 }
 
-export const streamData = value => dispatch => {
-  dispatch({type:STREAM_DATA, payload:value});
+export const streamData = streamByte => dispatch => {
+  let dataString = "";
+  //this function reads the incoming bytes
+  // console.log(event)
+  let buffer = streamByte.target.value.buffer;
+  var dataView = new DataView(buffer);
+  let data = "";
+  for (let i = 0; i < streamByte.target.value.byteLength; i++) {
+    let byte = dataView.getInt8(i)
+    let character = String.fromCharCode(byte);
+    data += character;
+  }
+  dispatch({type:STREAM_DATA, payload:data});
 }
 
 export const uploadData = activityData => dispatch => {

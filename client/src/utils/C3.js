@@ -13,7 +13,8 @@ export const C3Speed = {
     }
   },
   size:{
-    width:400
+    width:200,
+    height:200
   },
 
 }

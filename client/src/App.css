@@ -10,6 +10,14 @@ div {
   min-width:400px;
 }
 
+.recentMap {
+  width:600px;
+}
+
 .c3-line {
   stroke-width: 2px;
+}
+
+#recentSpeed {
+  max-width:400px;
 }

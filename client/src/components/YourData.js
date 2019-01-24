@@ -55,35 +55,48 @@ export class YourData extends Component {
         }
       })
 
-      return <div className="recentActivity max-w-lg mx-auto">
-        <h1 className="font-thin">Recent activity:</h1>
-        <br />
-        <h3 className="font-bold ">{moment(this.props.recent.date).format('MMMM Do, h:mm a')}</h3>
-        <RecentStatsAndMap className="recent-stats">
-          <Stats className="">
-            <h2 className="font-semibold">
-              Average speed:<hr />
-              <span className="font-thin" >{Math.round(this.props.recent.averageSpeedMPH * 100) / 100} mph</span>
-            </h2>
+      return <div className="recentActivity flex flex-column ">
+          <h1 className="font-thin">Recent activity:</h1>
+          <br />
+          <h3 className="font-bold ">
+            {moment(this.props.recent.date).format("MMMM Do, h:mm a")}
+          </h3>
+          <RecentStatsAndMap className="recent-stats  ">
+            <div className=" recentMap mr-8">
+              <MapItem coordinates={this.props.recent.coordinates} />
+            </div>
+            <Stats className="ml-8">
+              <h3 className="font-semibold ">
+                Average speed:
+                <hr />
+                <span className="font-thin">
+                  {Math.round(this.props.recent.averageSpeedMPH * 100) /
+                    100}{" "}
+                  mph
+                </span>
+              </h3>
 
-            <h2 className="font-semibold">
-              Total distance:<hr />
-              <span className="font-thin" >{Math.round(this.props.recent.totalDistanceM * 100) / 100} miles</span>
-            </h2>
-          </Stats>
-          <div className="col-md-12 ">
-            <MapItem coordinates={this.props.recent.coordinates} />
-          </div>
-          <div>
-            <h3 className="font-thin ">Speed:</h3>
-            <div id="recentSpeed" ></div>
-          </div>
-          <div>
-            <h3 className="font-thin ">Altitude:</h3>
-            <div id="recentAltitude" ></div>
-          </div>
-        </RecentStatsAndMap>
-      </div>;
+              <h3 className="font-semibold ">
+                Total distance:
+                <hr />
+                <span className="font-thin">
+                  {Math.round(this.props.recent.totalDistanceM * 100) /
+                    100}{" "}
+                  miles
+                </span>
+              </h3>
+            </Stats>
+
+            <div>
+              <h3 className="font-thin ">Speed:</h3>
+              <div id="recentSpeed" />
+            </div>
+            <div>
+              <h3 className="font-thin ">Altitude:</h3>
+              <div id="recentAltitude" />
+            </div>
+          </RecentStatsAndMap>
+        </div>;
     } else {
       return <div>Loading Recent Activity...</div>
     }
