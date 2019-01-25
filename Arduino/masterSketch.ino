@@ -19,7 +19,7 @@
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 //*** SD STUFF ***
 
-String fileName = "GPSDATA3.TXT";
+String fileName = "GPSDATA.TXT";
 
 //start the file Object
 File myFile;
@@ -54,7 +54,7 @@ long number = 0;
 void setup(void)
 {
   //this is hopefully not necessary, but works bettwe with it
-  //   while (!Serial);
+//   while (!Serial);
   //   ; // required for Flora & Micro
   delay(500);
 
@@ -64,19 +64,18 @@ void setup(void)
 
   /* Initialise the module */
   Serial.print(F("Initialising the Bluefruit LE module: "));
-
-  if (!ble.begin(VERBOSE_MODE))
+  
+  if ( !ble.begin(VERBOSE_MODE) )
   {
     //error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
   }
-  Serial.println(F("OK!"));
+  Serial.println( F("OK!") );
 
-  if (FACTORYRESET_ENABLE)
+  if ( FACTORYRESET_ENABLE )
   {
     /* Perform a factory reset to make sure everything is in a known state */
     Serial.println(F("Performing a factory reset: "));
-    if (!ble.factoryReset())
-    {
+    if ( ! ble.factoryReset() ){
       //error(F("Couldn't factory reset"));
     }
   }
@@ -96,7 +95,7 @@ void setup(void)
   /* Wait for connection */
   while (!ble.isConnected())
   {
-    delay(500);
+    delay(3000);
   }
 
   Serial.println(F("Connected to device"));
@@ -115,7 +114,9 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
+
   Serial.print("Initializing SD card...");
+  ble.println("INitializing SD...");
 
   if (!SD.begin(10))
   {
@@ -124,10 +125,12 @@ void setup(void)
       ;
   }
   Serial.println("initialization done. Card found");
+  ble.println("initialization done. Card found, starting GPS setup");
   //GPS set up function down below
   GPSSetup();
+  ble.println("GPS se up complete");  
   delay(5000);
-  ble.print("connected");
+  ble.print("connected, about to loop");
 }
 
 /**************************************************************************/
@@ -137,28 +140,21 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-  number++;
-  Serial.println(number);
-  if (mode == 2)
-  {
+  if(mode == 2) {
     streamData();
-  }
-
-  if (mode == 1)
-  {
+    }
+  
+  if(mode == 1){
     readAndSendFile();
   }
-  if (mode == 0)
-  {
+  if(mode ==0){
     GPSReadAndLog();
   }
-  if (mode == 4)
-  {
-    if (SD.exists(fileName))
-    {
+  if(mode ==4) {
+    if(SD.exists(fileName)){
       SD.remove(fileName);
+      }
     }
-  }
 }
 
 void GPSSetup()
@@ -169,15 +165,13 @@ void GPSSetup()
   rtc.begin();
 }
 
-void streamData()
-{
-  //RTC date object
+void streamData() {
+    //RTC date object
   DateTime now = rtc.now();
 
   while (Serial1.available() > 0)
     if (gps.encode(Serial1.read()))
     {
-      Serial.println("encoded");
 
       if (gps.location.isValid())
       {
@@ -203,15 +197,14 @@ void streamData()
         dataString.concat(',');
         dataString.concat(currentUnixTime);
         dataString.concat('$');
-
-        for (int i = 0; i < dataString.length(); i++)
-        {
-          ble.print(dataString[i]);
-          delay(20);
-        }
-        delay(70);
-      }
+     
+  for(int i=0; i< dataString.length(); i++){
+      ble.print(dataString[i]);
+      delay(20);
     }
+    delay(5000);
+  }
+ }
 }
 
 void readAndSendFile()
@@ -226,13 +219,14 @@ void readAndSendFile()
     {
       Serial.println(myFile.peek());
       ble.write(myFile.read());
+     delay(10);
+      
     }
     // close the file:
     myFile.close();
     ble.print("#");
     Serial.println("DONE");
-    while (true)
-      ;
+    while(true);
   }
   else
   {
@@ -250,7 +244,6 @@ void GPSReadAndLog()
   while (Serial1.available() > 0)
     if (gps.encode(Serial1.read()))
     {
-      ble.print("encoded");
 
       if (gps.location.isValid())
       {
@@ -260,7 +253,7 @@ void GPSReadAndLog()
 
         String currentUnixTime = String(now.unixtime());
         String currentAltitude = String(gps.altitude.meters());
-        String currentSpeed = String(gps.speed.mps());
+        String currentSpeed = String(gps.speed.mph());
         dataString.concat(String(gps.location.lat(), 6));
         dataString.concat(',');
         dataString.concat('N');

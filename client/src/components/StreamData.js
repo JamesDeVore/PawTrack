@@ -48,7 +48,7 @@ class Data extends Component {
     });
      map.setView(new ol.View({
          center: ol.proj.fromLonLat([-78.899621, 35.999999]), //Durham
-         zoom: 14.5
+         zoom: 16
        }));
      
     // save map and layer references to local state
@@ -70,6 +70,8 @@ class Data extends Component {
         let source = layers.a[i].getSource()
         source.clear()
       }
+      let view = this.state.map.getView();
+      view.setCenter(ol.proj.fromLonLat([parseFloat(this.props.stream.lng),parseFloat(this.props.stream.lat)]));
       this.addPointToMap()
       this.state.speedChart.flow({
         columns:[this.props.stream.speed],
@@ -138,8 +140,8 @@ addPointToMap = () => {
 
   render() {
     let {lat, lng} = this.props.stream;
-    return <div className="flex mt-12 w-full flex-row min-h-full pb-16 px-auto">
-        <div className="min-h-full w-1/2 shadow border-grey rounded-lg border-2 map-item" ref="streamMap" />
+    return <div className="flex flex-shrink mt-12 ml-12 w-full flex-row min-h-screen pb-16 px-auto">
+        <div className=" w-1/2 min-h-24 shadow border-grey rounded-lg border-2 map-item" ref="streamMap" />
         <div className="mb-8 px-8 mt-8 ">
           <h2 className="font-xl px-4 shadow font-bold rounded-lg leading-loose">
             Latitude: &nbsp;{lat} &#176;

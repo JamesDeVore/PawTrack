@@ -15,7 +15,7 @@ class Upload extends Component {
     this.state = {
       activityData:"",
       characteristic:null,
-      uploading:null
+      uploading:false
     }
   }
 
@@ -72,11 +72,12 @@ class Upload extends Component {
   renderUploadProgress = () => {
     if(this.state.uploading === true) {
       return (
-      <ReactLoading type={'spin'} color={"#51d88a"} delay={1000} height={'6em'} width={'6em'} />
+      <ReactLoading className="mx-16"
+       type={'spin'} color={"#51d88a"} delay={1000} height={'6em'} width={'6em'} />
       )
     } else if(this.state.uploading === false) {
       return <button onClick={() => this.props.uploadData(this.state.activityData)}
-      className="bg-green mx-2 hover:bg-green-light text-white text-xl font-bold py-2 px-6 border-b-4 border-green-dark hover:border-green rounded">
+      className="bg-green mt-8 hover:bg-green-light text-white text-xl font-bold py-2 px-6 border-b-4 border-green-dark hover:border-green rounded">
           Save Data <FaSave />
         </button>;
     } else if(this.state.uploading === 'done'){
@@ -84,22 +85,22 @@ class Upload extends Component {
     } 
     
     else {
-      return (
-        <h2>Click the connect button to get started!</h2>
-      )
+      return <div className="mt-6 w-64 ml-4">
+          <h2 className="font-thin">Click the connect button to get started!</h2>
+        </div>;
     }
   }
 
   render() {
     // console.log(this.props)
     return <div className="min-h-screen  ">
-        <div className="infoBar text-white bg-green-light h-16 flex font-lg items-center justify-between px-4">
-          <h2 className="stream-info">
+        <div className="infoBar text-white bg-green-light pb-2 pt-2 flex font-lg items-center justify-between px-4">
+          <h2 className="upload-info flex flex-shrink">
             Connect your BorkBit to upload your activity
           </h2>
           
             <div className= " flex flex-row">
-            <p className="font-bold mr-6">Select Mode</p>
+
           <div>
             <ModeSelect />
           </div>
@@ -113,7 +114,7 @@ class Upload extends Component {
             </button>
           </div>
         </div>
-        <div className="flex flex-row justify-around">
+        <div className="flex flex-row justify-start mt-16 ml-16">
           <div className="upload-instructions h-full">
             <h1 className="font-bold">To Upload:</h1>
             <p className="text-xl">
@@ -125,7 +126,7 @@ class Upload extends Component {
               data once the upload completes!
             </p>
           </div>
-          <div className="upload-progress ">
+          <div className="upload-progress content-center justify-center mx-10">
             <h1>Upload Progress:</h1>
 
             {this.renderUploadProgress()}

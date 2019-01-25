@@ -14,7 +14,9 @@ export default class ModeSelect extends Component {
   constructor(props){
     super(props)
     this.state = {
-      selectedOption:null
+      selectedOption:{value:0},
+      characteristic:null,
+      currentMode:null
     }
   }
   handleChange = (selectedOption) => {
@@ -22,9 +24,18 @@ export default class ModeSelect extends Component {
     console.log(`Option selected:`, selectedOption);
   }
   renderAccept = () => {
-    if(this.state.selectedOption){
+    if(this.state.selectedOption.value === 5){
+      return <div>
+          <button className="flex-shrink bg-blue mx-2 hover:bg-orange-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-orange-dark hover:border-orange rounded" 
+          onClick={() => this.checkMode()}>
+            Check Mode <FaPaperPlane />
+          </button>
+          <p> Current Mode: {this.state.currentMode}</p>
+        </div>;
+    }
+     else if(this.state.selectedOption.value > 0){
       return (
-        <button className="bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" 
+        <button className="flex-shrink bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" 
         onClick={() => this.changeBTDevice()}>
           Change Mode <FaPaperPlane />
         </button>
@@ -32,8 +43,25 @@ export default class ModeSelect extends Component {
     }
   }
 
+  _handleCharacteristicValueChanged = (event) => {
+    //this function reads the incoming bytes
+    // console.log(event)
+    let buffer = event.target.value.buffer;
+    var dataView = new DataView(buffer);
+    let data = "";
+    for (let i = 0; i < event.target.value.byteLength; i++) {
+      let byte = dataView.getInt8(i)
+      let character = String.fromCharCode(byte);
+      data += character;
+    }
+    console.log(data)
+    let currentMode = options.find(option => option.value == data);
+    this.setState({currentMode:currentMode.label})
+    
+  }
+
   changeBTDevice = async () => {
-    try {
+ try{
       let options = {
         acceptAllDevices: true,
         optionalServices: ["6e400001-b5a3-f393-e0a9-e50e24dcca9e"]
@@ -44,17 +72,40 @@ export default class ModeSelect extends Component {
       let service = await server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e')
       let characteristic = await service.getCharacteristic('6e400002-b5a3-f393-e0a9-e50e24dcca9e')
       await characteristic.writeValue(Uint8Array.of(parseInt(this.state.selectedOption.value)))
-      window.location.reload()
-
+      // window.location.reload()
     } catch {
-      console.log('???')
+ 
+    }
+  }
+
+  checkMode = async () => {
+    try {
+      let options = {
+        acceptAllDevices: true,
+        optionalServices: ["6e400001-b5a3-f393-e0a9-e50e24dcca9e"]
+      };
+      console.log('Requesting Bluetooth Device...');
+      let device = await navigator.bluetooth.requestDevice(options);
+      let server = await device.gatt.connect();
+      let service = await server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e')
+      let characteristic = await service.getCharacteristic('6e400003-b5a3-f393-e0a9-e50e24dcca9e')
+      let sendChar = await service.getCharacteristic("6e400002-b5a3-f393-e0a9-e50e24dcca9e");
+      await sendChar.writeValue(Uint8Array.of(parseInt(this.state.selectedOption.value)));
+      await characteristic.startNotifications()
+      this.setState({ characteristic });
+      await characteristic.addEventListener('characteristicvaluechanged', this._handleCharacteristicValueChanged);
+      console.log('Device connected, listening for events...');
+      // window.location.reload()
+    } catch {
+      console.log("Stack trace error")
     }
   }
 
   render() {
     console.log(this.props)
-    return <div className= "flex flex-row min-w-24">
-        <Select className="dropdown min-w-16" options={options} value={this.state.selectedOption} onChange={this.handleChange} />
+    return <div className= " mode-select flex flex-row flex-shrink ">
+      <p className="font-bold mr-6">Select Mode</p>
+        <Select className="dropdown flex-shrink max-w-6" options={options} value={this.state.selectedOption} onChange={this.handleChange} />
         {this.renderAccept()}
       </div>;
   }

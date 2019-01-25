@@ -14,17 +14,24 @@ div {
   width:600px;
 }
 
+.map-item {
+  height:75%;
+}
+
 .c3-line {
   stroke-width: 2px;
 }
 
 .dropdown {
-  min-width:400px;
+  width:10vw;
   color:black;
 }
 
 #recentSpeed {
   max-width:400px;
+}
+.upload-info {
+  font-size:2vw;
 }
 
 .c3-axis-x .tick {display: none;}
