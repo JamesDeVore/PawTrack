@@ -19,37 +19,41 @@ export default class PastActivity extends Component {
       }
     }
     let tooltip = {
-      show:false
-    } 
+      show: false
+    }
     const altData = { columns: [altitude], colors: { Altitude: "#4252E5" } };
     return <div className="recentActivity ">
-        <div>
-          <h1 className="font-thin">
-            {moment(date).format("MMMM Do, h:mm a")}
-          </h1>
+      <div>
+        <h1 className="font-thin items-center mb-6 mr-8">
+          {moment(date).format("MMMM Do, h:mm a")}
+        </h1>
+        
+      </div>
+      <div className="flex flex-row justify-between">
+        <div className="past-map ml-10 mr-10 h-24">
+          <MapItem coordinates={coordinates} />
         </div>
-        <div className="flex flex-row">
-          <div className="past-map ml-10 mr-10 h-24">
-            <MapItem coordinates={coordinates} />
-          </div>
-          <div className=" flex-col">
-            <h3 className="font-thin">Total distance:</h3>
-            <p className="font-semibold text-xl">
-              {Math.round(totalDistanceM * 100) / 100}
-            </p>
-            <h3 className="font-thin"> Average Speed:</h3>
-            <p className="font-semibold text-xl">
-              {Math.round(averageSpeedMPH * 100) / 100}
-            </p>
-          </div>
-          <div className="shadow ml-5 mr-5 rounded border">
+        <div className=" flex-col">
+          <h3 className="font-thin">Total distance:</h3>
+          <h3 className="font-semibold text-2xl">
+            {Math.round(totalDistanceM * 100) / 100}
+          </h3>
+          <h3 className="font-thin"> Average Speed:</h3>
+          <h3 className="font-semibold text-2xl">
+            {Math.round(averageSpeedMPH * 100) / 100}
+          </h3>
+        </div>
+        <div className="shadow flex flex-row mr-6 rounded border">
+          <div className="ml-2 mr-2">
             <C3Chart data={data} size={C3Past.size} axis={C3Speed.axis} point={{ r: 0 }} tooltip={tooltip} />
           </div>
-          <div className="shadow ml-5 mr-5 rounded border">
+          <div className="ml-2 mr-2">
             <C3Chart data={altData} size={C3Past.size} axis={C3Altitude.axis} point={{ r: 0 }} tooltip={tooltip} />
           </div>
         </div>
-        <hr />
-      </div>;
+
+      </div>
+      <hr />
+    </div>;
   }
 }

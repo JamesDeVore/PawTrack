@@ -21,6 +21,7 @@ class Stream extends Component {
     this.props.streamData(event);
   }
   connectBTDevice = async () => {
+    try{
     let options = {
       acceptAllDevices:true,
       optionalServices: ["6e400001-b5a3-f393-e0a9-e50e24dcca9e"]
@@ -34,6 +35,9 @@ class Stream extends Component {
     await characteristic.startNotifications()
     await characteristic.addEventListener('characteristicvaluechanged',this._handleCharacteristicValueChanged);
     console.log('Device connected, listening for events...');
+  } catch {
+    console.log("????")
+  }
   }
   disconnectBTDevice = () => {
     window.location.reload()

@@ -12,6 +12,21 @@ export const C3Speed = {
       max: 10
     }
   },
+  liveAxis: {
+    x: {
+      tick: {
+        count: 0,
+        culling:{
+          max:0
+        },
+      },
+      label: 'Time'
+    },
+    y: {
+      label: 'Speed (mph)',
+      max: 5
+    }
+  },
   size:{
     width:200,
     height:200

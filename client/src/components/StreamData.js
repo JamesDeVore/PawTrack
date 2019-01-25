@@ -3,17 +3,36 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import MapItem from "./map";
+import c3 from "c3";
+import { C3Speed, } from "../utils/C3";
+
 var ol = require("openlayers");
 require("openlayers/css/ol.css");
 
 class Data extends Component {
   constructor(props){
     super(props)
-    this.state = { map: null, features: null, prevLat:null, prevLng: null };
+    this.state = { map: null, features: null, prevLat:null, prevLng: null, speedChart:null };
+    console.log(this.props.stream.speed);
+
   }
 
-   componentDidMount() {
-
+  componentDidMount() {
+    let speedChart = c3.generate({
+      bindto: "#liveSpeed",
+      data: {
+        columns:[this.props.stream.speed]},
+      axis: C3Speed.liveAxis,
+      size: C3Speed.size,
+      // point: noPoint,
+      types: {
+        Speed: "area"
+      },
+      zoom: { enabled: true },
+      tooltip: {
+        show: false
+      }
+    });
     // create feature layer and vector source
 
 
@@ -28,13 +47,14 @@ class Data extends Component {
       ]
     });
      map.setView(new ol.View({
-         center: ol.proj.fromLonLat([-78.898621, 35.994034]), //Durham
-         zoom: 10
+         center: ol.proj.fromLonLat([-78.899621, 35.999999]), //Durham
+         zoom: 14.5
        }));
      
     // save map and layer references to local state
     this.setState({
-      map: map
+      map: map,
+      speedChart
     });
 
 
@@ -51,6 +71,10 @@ class Data extends Component {
         source.clear()
       }
       this.addPointToMap()
+      this.state.speedChart.flow({
+        columns:[this.props.stream.speed],
+        duration:1000
+      })
       return true;
     } else {
       return false
@@ -106,19 +130,27 @@ addPointToMap = () => {
   }
 }
 
-
+  renderLiveChart = () => {
+    
+  }
 
 
 
   render() {
     let {lat, lng} = this.props.stream;
-    return <div className="flex w-full flex-row min-h-full px-auto">
-        <div className="min-h-full w-1/2" ref="streamMap" />
+    return <div className="flex mt-12 w-full flex-row min-h-full pb-16 px-auto">
+        <div className="min-h-full w-1/2 shadow border-grey rounded-lg border-2 map-item" ref="streamMap" />
         <div className="mb-8 px-8 mt-8 ">
-          <h1 className="font-xl font-bold">Latitude:{lat}</h1>
+          <h2 className="font-xl px-4 shadow font-bold rounded-lg leading-loose">
+            Latitude: &nbsp;{lat} &#176;
+          </h2>
           <br />
-          <br />
-          <h1 className="font-xl font-bold leading-loose">Longitude:{lng}</h1>
+          <h2 className="font-xl px-4 shadow font-bold leading-loose rounded-lg">
+            Longitude: &nbsp;{lng} &#176;
+           
+          </h2>
+        <br />
+          <div className=" px-6  " id="liveSpeed" />
         </div>
       </div>;
   }

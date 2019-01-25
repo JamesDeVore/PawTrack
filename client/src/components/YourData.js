@@ -56,9 +56,9 @@ export class YourData extends Component {
       })
 
       return <div className="recentActivity flex flex-column ">
-          <h1 className="font-thin">Recent activity:</h1>
+          <h1 className="font-bold">Recent activity:</h1>
           <br />
-          <h3 className="font-bold ">
+          <h3 className="font-thin ">
             {moment(this.props.recent.date).format("MMMM Do, h:mm a")}
           </h3>
           <RecentStatsAndMap className="recent-stats  ">
@@ -103,7 +103,7 @@ export class YourData extends Component {
   }
   renderPastActivityItems = () => {
     if (this.props.data.length > 1) {
-      // this.props.data.shift()
+      this.props.data.shift()
       let id = 0;
       return (
         this.props.data.map(pastItems => {
@@ -119,7 +119,7 @@ export class YourData extends Component {
       <div>
         {this.renderRecentActivity()}
         <hr />
-        <h1 className="font-thin">Past Activity</h1>
+
         {this.renderPastActivityItems()}
       </div>
     )

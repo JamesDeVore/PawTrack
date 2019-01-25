@@ -1,6 +1,6 @@
 import {STREAM_DATA} from '../actions/types'
 
-export const streamReducer = (state = {incomingData:"",lat:"", lng:"", speed:[0]} , action) => {
+export const streamReducer = (state = {incomingData:"",lat:"", lng:"", speed:["Speed",0]} , action) => {
   let {type, payload} = action
   switch (type) {
     case STREAM_DATA:
@@ -11,11 +11,10 @@ export const streamReducer = (state = {incomingData:"",lat:"", lng:"", speed:[0]
       }
     } else {
       let newState = {
-        speed:state.speed
+        speed: ["Speed", 0,0]
       }
       let newStateWithData = latGrabber(state.incomingData, newState)
       newStateWithData.incomingData = "";
-      console.log(newStateWithData, "HHELRKJHRL")
 
       state = newStateWithData;
       return state;
@@ -28,7 +27,10 @@ const latGrabber = (dataString, state) => {
   let points = dataString.split(",")
   points[0] = points[0].replace(/(\r\n|\n|\r)/gm, "");
   state.lat = points[0];
+  if(parseFloat(points[5]) !== NaN){
+    state.speed.pop()
   state.speed = state.speed.concat(parseFloat(points[5]))
+  }
   state.lng = points[2];
   return state
 }

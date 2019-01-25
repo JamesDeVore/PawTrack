@@ -7,7 +7,7 @@ div {
 }
 
 .past-map {
-  min-width:400px;
+  min-width:500px;
 }
 
 .recentMap {
@@ -18,6 +18,13 @@ div {
   stroke-width: 2px;
 }
 
+.dropdown {
+  min-width:400px;
+  color:black;
+}
+
 #recentSpeed {
   max-width:400px;
 }
+
+.c3-axis-x .tick {display: none;}
