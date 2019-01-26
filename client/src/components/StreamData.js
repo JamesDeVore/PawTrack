@@ -152,7 +152,7 @@ addPointToMap = () => {
            
           </h2>
         <br />
-          <div className=" px-6  " id="liveSpeed" />
+          <div className=" px-6 no-tick  " id="liveSpeed" />
         </div>
       </div>;
   }

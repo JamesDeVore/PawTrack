@@ -30,7 +30,7 @@ export default class PastActivity extends Component {
         
       </div>
       <div className="flex flex-row justify-between">
-        <div className="past-map ml-10 mr-10 h-24">
+        <div className="past-map ml-10 mr-10">
           <MapItem coordinates={coordinates} />
         </div>
         <div className=" flex-col">
@@ -45,10 +45,10 @@ export default class PastActivity extends Component {
         </div>
         <div className="shadow flex flex-row mr-6 rounded border">
           <div className="ml-2 mr-2">
-            <C3Chart data={data} size={C3Past.size} axis={C3Speed.axis} point={{ r: 0 }} tooltip={tooltip} />
+            <C3Chart className="no-tick" data={data} size={C3Past.size} axis={C3Speed.axis} point={{ r: 0 }} tooltip={tooltip} />
           </div>
           <div className="ml-2 mr-2">
-            <C3Chart data={altData} size={C3Past.size} axis={C3Altitude.axis} point={{ r: 0 }} tooltip={tooltip} />
+            <C3Chart className="no-tick" data={altData} size={C3Past.size} axis={C3Altitude.axis} point={{ r: 0 }} tooltip={tooltip} />
           </div>
         </div>
 

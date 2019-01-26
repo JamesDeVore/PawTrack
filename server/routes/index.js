@@ -11,5 +11,6 @@ module.exports = function(app) {
   app.post('/register', User.registerUser);
   app.get('/me/data', GPSData.getAllGPSData);
   app.get('/me/recentData', GPSData.getMostRecentData)
+  app.get('/me/dashboard', GPSData.getDashData)
   app.post('/me/upload', GPSData.uploadData)
 }

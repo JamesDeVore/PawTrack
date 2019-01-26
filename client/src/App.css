@@ -6,6 +6,8 @@ div {
   background-color:rgb(255, 250, 245)
 }
 
+
+
 .past-map {
   min-width:500px;
 }
@@ -14,8 +16,9 @@ div {
   width:600px;
 }
 
-.map-item {
-  height:75%;
+.c3-axis-y-label, .c3-axis-y2-label{
+  font-weight:bold;
+  font-size:1em;
 }
 
 .c3-line {
@@ -33,5 +36,18 @@ div {
 .upload-info {
   font-size:2vw;
 }
+.mode-p {
+  margin-bottom:0;
+  line-height:2.5;
+}
 
-.c3-axis-x .tick {display: none;}
+.c3-axis-x .no-tick .tick {display: none;}
+.c3-chart-arcs-title {
+  font-weight:700;
+  font-size:5em;
+  fill:#6CB2EB !important;
+}
+.distance-display .c3-text {
+  font-size:1.5em;
+  font-weight:700;
+}

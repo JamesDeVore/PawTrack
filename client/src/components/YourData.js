@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import MapItem from './map'
 import styled from 'styled-components'
 import * as actions from "../actions";
-import C3Chart from "react-c3js";
 import "c3/c3.css";
 import moment from 'moment'
 import PastActivityItem from './PastActivityItem'
@@ -88,11 +87,11 @@ export class YourData extends Component {
             </Stats>
 
             <div>
-              <h3 className="font-thin ">Speed:</h3>
+              <h3 className="font-thin no-tick ">Speed:</h3>
               <div id="recentSpeed" />
             </div>
             <div>
-              <h3 className="font-thin ">Altitude:</h3>
+              <h3 className="font-thin no-tick">Altitude:</h3>
               <div id="recentAltitude" />
             </div>
           </RecentStatsAndMap>

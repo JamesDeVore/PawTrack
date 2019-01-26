@@ -80,3 +80,9 @@ exports.uploadData = async (req,res) => {
   })
   await newRun.save()
 }
+
+exports.getDashData = async (req, res) => {
+  let allRuns = await Run.find({}, {}, { sort: { date: -1 } });
+  let allFormattedRuns = allRuns.map(run => _formatData(run));
+  res.send(allFormattedRuns);
+}

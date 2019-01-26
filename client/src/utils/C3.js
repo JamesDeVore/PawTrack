@@ -54,3 +54,7 @@ export const C3Past = {
     width:300
   }
 }
+
+export const C3TotalDistance = {
+  
+}

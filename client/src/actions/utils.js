@@ -32,3 +32,10 @@ exports.calculateAvgSpeed = (speedArray) => {
   let avg = sum/speedArray.length;
   return avg
 }
+
+exports.remove$FromCoords = element => {
+  let newDataArray = [];
+  newDataArray.push(parseFloat(element[0]['$numberDecimal']));
+  newDataArray.push(parseFloat(element[1]['$numberDecimal']));
+  return newDataArray
+}

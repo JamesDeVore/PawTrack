@@ -47,14 +47,15 @@ unsigned long previousMillis = 0;
 
 const long interval = 1000;
 
-int mode = 1;
+int mode = 0;
 
 long number = 0;
 
 void setup(void)
 {
+  pinMode(LED_BUILTIN, OUTPUT);
   //this is hopefully not necessary, but works bettwe with it
-//   while (!Serial);
+  //   while (!Serial);
   //   ; // required for Flora & Micro
   delay(500);
 
@@ -64,18 +65,19 @@ void setup(void)
 
   /* Initialise the module */
   Serial.print(F("Initialising the Bluefruit LE module: "));
-  
-  if ( !ble.begin(VERBOSE_MODE) )
+
+  if (!ble.begin(VERBOSE_MODE))
   {
     //error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
   }
-  Serial.println( F("OK!") );
+  Serial.println(F("OK!"));
 
-  if ( FACTORYRESET_ENABLE )
+  if (FACTORYRESET_ENABLE)
   {
     /* Perform a factory reset to make sure everything is in a known state */
     Serial.println(F("Performing a factory reset: "));
-    if ( ! ble.factoryReset() ){
+    if (!ble.factoryReset())
+    {
       //error(F("Couldn't factory reset"));
     }
   }
@@ -93,10 +95,6 @@ void setup(void)
   ble.verbose(false); // debug info is a little annoying after this point!
   Serial.println("Waiting on connection . . . ");
   /* Wait for connection */
-  while (!ble.isConnected())
-  {
-    delay(3000);
-  }
 
   Serial.println(F("Connected to device"));
 
@@ -114,7 +112,6 @@ void setup(void)
 
   Serial.println(F("******************************"));
 
-
   Serial.print("Initializing SD card...");
   ble.println("INitializing SD...");
 
@@ -128,8 +125,10 @@ void setup(void)
   ble.println("initialization done. Card found, starting GPS setup");
   //GPS set up function down below
   GPSSetup();
-  ble.println("GPS se up complete");  
+  ble.println("GPS se up complete");
+  digitalWrite(LED_BUILTIN, HIGH);
   delay(5000);
+  digitalWrite(LED_BUILTIN, LOW);
   ble.print("connected, about to loop");
 }
 
@@ -140,21 +139,39 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-  if(mode == 2) {
+
+  unsigned long currentMillis = millis();
+
+  if (currentMillis - previousMillis >= interval)
+  {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+    modeBlink();
+  }
+
+  Serial.println(mode);
+  checkForInput();
+
+  if (mode == 2)
+  {
     streamData();
-    }
-  
-  if(mode == 1){
+  }
+
+  if (mode == 1)
+  {
     readAndSendFile();
   }
-  if(mode ==0){
+  if (mode == 0)
+  {
     GPSReadAndLog();
   }
-  if(mode ==4) {
-    if(SD.exists(fileName)){
+  if (mode == 4)
+  {
+    if (SD.exists(fileName))
+    {
       SD.remove(fileName);
-      }
     }
+  }
 }
 
 void GPSSetup()
@@ -165,8 +182,9 @@ void GPSSetup()
   rtc.begin();
 }
 
-void streamData() {
-    //RTC date object
+void streamData()
+{
+  //RTC date object
   DateTime now = rtc.now();
 
   while (Serial1.available() > 0)
@@ -197,14 +215,15 @@ void streamData() {
         dataString.concat(',');
         dataString.concat(currentUnixTime);
         dataString.concat('$');
-     
-  for(int i=0; i< dataString.length(); i++){
-      ble.print(dataString[i]);
-      delay(20);
+
+        for (int i = 0; i < dataString.length(); i++)
+        {
+          ble.print(dataString[i]);
+          delay(20);
+        }
+        delay(5000);
+      }
     }
-    delay(5000);
-  }
- }
 }
 
 void readAndSendFile()
@@ -217,16 +236,17 @@ void readAndSendFile()
     // read from the file until there's nothing else in it:
     while (myFile.available())
     {
+      digitalWrite(LED_BUILTIN, HIGH);
       Serial.println(myFile.peek());
       ble.write(myFile.read());
-     delay(10);
-      
+      digitalWrite(LED_BUILTIN, LOW);
+      delay(10);
     }
     // close the file:
     myFile.close();
     ble.print("#");
     Serial.println("DONE");
-    while(true);
+    mode = 0;
   }
   else
   {
@@ -287,4 +307,41 @@ void GPSReadAndLog()
       }
       break;
     }
+}
+
+void checkForInput()
+{
+  // Check for user input
+  char n, inputs[BUFSIZE + 1];
+
+  if (Serial.available())
+  {
+    n = Serial.readBytes(inputs, BUFSIZE);
+    inputs[n] = 0;
+    // Send characters to Bluefruit
+    Serial.print("Sending: ");
+    Serial.println(inputs);
+
+    // Send input data to host via Bluefruit
+    ble.print(inputs);
+  }
+
+  // Echo received data
+  while (ble.available())
+  {
+    int c = ble.read();
+    mode = c;
+    setup();
+  }
+}
+
+void modeBlink()
+{
+  for (int i = 0; i < mode; i++)
+  {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(150);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(150);
+  }
 }

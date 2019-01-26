@@ -15,7 +15,7 @@ class Upload extends Component {
     this.state = {
       activityData:"",
       characteristic:null,
-      uploading:false
+      uploading:null
     }
   }
 
@@ -77,7 +77,7 @@ class Upload extends Component {
       )
     } else if(this.state.uploading === false) {
       return <button onClick={() => this.props.uploadData(this.state.activityData)}
-      className="bg-green mt-8 hover:bg-green-light text-white text-xl font-bold py-2 px-6 border-b-4 border-green-dark hover:border-green rounded">
+      className="bg-green mt-4 hover:bg-green-light text-white text-xl font-bold py-2 px-6 border-b-4 border-green-dark hover:border-green rounded">
           Save Data <FaSave />
         </button>;
     } else if(this.state.uploading === 'done'){
