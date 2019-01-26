@@ -15,6 +15,13 @@ div {
 .recentMap {
   width:600px;
 }
+.record {
+  	text-shadow:
+		-1px -1px 0 rgb(83, 83, 83),
+		1px -1px 0 #rgb(83, 83, 83),
+		-1px 1px 0 #rgb(83, 83, 83),
+		1px 1px 0 #rgb(83, 83, 83);
+}
 
 .c3-axis-y-label, .c3-axis-y2-label{
   font-weight:bold;

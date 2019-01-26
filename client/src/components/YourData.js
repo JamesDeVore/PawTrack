@@ -55,7 +55,7 @@ export class YourData extends Component {
       })
 
       return <div className="recentActivity flex flex-column ">
-          <h1 className="font-bold">Recent activity:</h1>
+          <h1 className="font-bold">Recent Activity:</h1>
           <br />
           <h3 className="font-thin ">
             {moment(this.props.recent.date).format("MMMM Do, h:mm a")}
@@ -66,7 +66,7 @@ export class YourData extends Component {
             </div>
             <Stats className="ml-8">
               <h3 className="font-semibold ">
-                Average speed:
+                Average Speed:
                 <hr />
                 <span className="font-thin">
                   {Math.round(this.props.recent.averageSpeedMPH * 100) /
@@ -76,7 +76,7 @@ export class YourData extends Component {
               </h3>
 
               <h3 className="font-semibold ">
-                Total distance:
+                Total Distance:
                 <hr />
                 <span className="font-thin">
                   {Math.round(this.props.recent.totalDistanceM * 100) /

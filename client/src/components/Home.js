@@ -4,7 +4,10 @@ import MyCarousel from './carousel';
 import { connect } from 'react-redux';
 import c3 from "c3";
 import moment from 'moment';
-import PastActivity from './PastActivityItem'
+import PastActivity from './PastActivityItem';
+import ModeSelect from './ModeSelect'
+import { FaGlobe, FaBan, FaStar } from "react-icons/fa";
+
 
 
 export class Home extends Component {
@@ -146,37 +149,52 @@ export class Home extends Component {
 
   render() {
     if (this.props.dash.totalDistanceOverall) {
-      return (
-
-        <div className="">
+      return <div className="">
+          <div className="infoBar text-white bg-green-light h-16 flex font-lg items-center justify-between px-4">
+            <h2 className="stream-info w-1/2 font-sm">
+              Connect your BorkBit to track and upload data!
+            </h2>
+            <ModeSelect />
+            <div>
+              <button className="bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" onClick={() => this.connectBTDevice()}>
+                Connect <FaGlobe />
+              </button>
+              <button className="bg-red mx-2 hover:bg-red-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-red-dark hover:border-red rounded" onClick={() => this.disconnectBTDevice()}>
+                Disconnect <FaBan />
+              </button>
+            </div>
+          </div>
           {/* <MyCarousel /> */}
-          <h1>Welcome Back!</h1>
-          <p>Here is your progress so far!</p>
+        <h1 className=" text-6xl text-blue-dark font-bold">Welcome Back!</h1>
+          <p className="font-thin text-2xl">Here is your progress so far!</p>
           <div className="flex flex-row charts items-center text-center justify-between mx-8">
-
             <div className="cal-display shadow px-12">
               <h1>Total Calories:</h1>
-              <div id="calories"></div>
+              <div id="calories" />
             </div>
             <div className="distance-display shadow px-12">
               <h1>Recent Trends:</h1>
-              <div id="totalDistance">
-              </div>
+              <div id="totalDistance" />
             </div>
             <div className="flex flex-col shadow px-12">
               <h1>Total Distance:</h1>
-              <h3>{Math.round(this.props.dash.totalDistanceOverall * 100) / 100} miles</h3>
-              <div id="totalDistanceOverall"></div>
+              <h3>
+                {Math.round(this.props.dash.totalDistanceOverall * 100) /
+                  100}{" "}
+                miles
+              </h3>
+              <div id="totalDistanceOverall" />
             </div>
           </div>
 
-          <div><hr />
-            <h4>Your fastest pace activity to date</h4>
+          <div>
+            <hr />
+            <h1 className="record text-3xl text-yellow-dark font-bold">
+              <FaStar />  Your fastest activity to date! <FaStar />
+            </h1>
             <PastActivity allData={this.props.dash.fastestPaceActivity} />
           </div>
-
-        </div>
-      )
+        </div>;
     } else {
       return <div>Loading...</div>
     }

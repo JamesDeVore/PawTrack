@@ -34,13 +34,13 @@ export default class PastActivity extends Component {
           <MapItem coordinates={coordinates} />
         </div>
         <div className=" flex-col">
-          <h3 className="font-thin">Total distance:</h3>
+          <h3 className="font-thin">Total Distance:</h3>
           <h3 className="font-semibold text-2xl">
-            {Math.round(totalDistanceM * 100) / 100}
+            {Math.round(totalDistanceM * 100) / 100} miles
           </h3>
           <h3 className="font-thin"> Average Speed:</h3>
           <h3 className="font-semibold text-2xl">
-            {Math.round(averageSpeedMPH * 100) / 100}
+            {Math.round(averageSpeedMPH * 100) / 100} mph
           </h3>
         </div>
         <div className="shadow flex flex-row mr-6 rounded border">
