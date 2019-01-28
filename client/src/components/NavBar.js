@@ -18,11 +18,14 @@ export default class NavBar extends React.Component {
   }
   render() {
     return <nav className="flex items-center justify-between flex-wrap bg-blue-light p-4">
-        <div className="flex items-center flex-no-shrink text-white mr-6">
-        <span classNameName='font-bold text-xl tracking-light' ><FaPaw /> &nbsp;</span>
-          <a href="/" className="font-semibold text-xl text-white tracking-tight ">
-            Run, Myrah, Run!
-          </a>
+        <div className="flex flex-col content-center flex-no-shrink text-white mr-6">
+          <span className="font-bold text-xl tracking-light items-senter">
+            <FaPaw /> &nbsp;
+            <a href="/" className="font-semibold text-xl text-white tracking-tight ">
+              PawTrack
+            </a>
+          </span>
+          <p className="font-thin text-white pb-0">'Run, Myrah, Run!'</p>
         </div>
         <div className="block lg:hidden">
           <button className="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">
@@ -33,18 +36,16 @@ export default class NavBar extends React.Component {
           </button>
         </div>
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-          <div className="text-md lg:flex-grow">
-
-          </div>
+          <div className="text-md lg:flex-grow" />
           <div>
             <a href="/stream" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
               Stream Activity Live!
             </a>
-          <a href="/upload" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
-            Upload Activity
+            <a href="/upload" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
+              Upload Activity
             </a>
-          <a href="/data" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
-            Your Past Activities
+            <a href="/data" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
+              Your Past Activities
             </a>
           </div>
         </div>

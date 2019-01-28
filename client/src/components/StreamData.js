@@ -21,19 +21,38 @@ class Data extends Component {
     let speedChart = c3.generate({
       bindto: "#liveSpeed",
       data: {
-        columns:[this.props.stream.speed]},
-      axis: C3Speed.liveAxis,
-      size: C3Speed.size,
-      // point: noPoint,
-      types: {
-        Speed: "area"
+        columns: [["Speed", 0]],
+        type: "gauge"
       },
-      zoom: { enabled: true },
-      tooltip: {
-        show: false
+      transition: {
+        duration: 4000
+      },
+      gauge: {
+        label: {
+          format: function(value, ratio) {
+            return Math.round(value * 100) / 100;
+          }
+        },
+        show: false, // to turn off the min/max labels.
+        //        },
+        //    min: 0, // 0 is default, //can handle negative min e.g. vacuum / voltage / current flow / rate of change
+        max: 8, // 100 is default
+        units: "MPH"
+        //    width: 39 // for adjusting arc thickness
+      },
+      color: {
+        pattern: ["#FF0000", "#F97600", "#F6C600", "#60B044"], // the three color levels for the percentage values.
+        threshold: {
+          unit: "value", // percentage is default
+          //            max: 200, // 100 is default
+          values: [5]
+        }
+      },
+      size: {
+        height: 180,
+        width:300
       }
     });
-    // create feature layer and vector source
 
 
     // create map object with feature layer
@@ -66,17 +85,17 @@ class Data extends Component {
       console.log(layers.a)
 
       for (let i = 1; i < layers.a.length; i++) {
-        console.log(layers.a[i])
         let source = layers.a[i].getSource()
         source.clear()
       }
       let view = this.state.map.getView();
       view.setCenter(ol.proj.fromLonLat([parseFloat(this.props.stream.lng),parseFloat(this.props.stream.lat)]));
       this.addPointToMap()
-      this.state.speedChart.flow({
-        columns:[this.props.stream.speed],
-        duration:1000
-      })
+      let newData = this.props.stream.speed;
+      newData.unshift("Speed")
+      this.state.speedChart.load({
+        columns: [newData]
+      });
       return true;
     } else {
       return false

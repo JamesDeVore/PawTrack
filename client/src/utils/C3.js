@@ -51,10 +51,11 @@ export const C3Altitude = {
 
 export const C3Past = {
   size:{
-    width:300
+    height:200,
+    width:200
   }
 }
 
 export const C3TotalDistance = {
-  
+
 }

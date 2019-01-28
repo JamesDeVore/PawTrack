@@ -6,6 +6,7 @@ import * as actions from "../actions";
 import { FaSave, FaBan, FaUpload } from "react-icons/fa";
 import ReactLoading from "react-loading";
 import ModeSelect from './ModeSelect'
+import ErrorModal from './ErrorModal'
 
 
 
@@ -15,7 +16,9 @@ class Upload extends Component {
     this.state = {
       activityData:"",
       characteristic:null,
-      uploading:null
+      uploading:null,
+      modal: false
+
     }
   }
 
@@ -33,6 +36,9 @@ class Upload extends Component {
       data += character;
     }
     this.setState({activityData:this.state.activityData.concat(data)})
+    if (this.state.activityData[this.state.activityData.length - 1] === '@') {
+      this.setState({ uploading: true })
+    }
     if(this.state.activityData[this.state.activityData.length-1] === '#'){
       this.setState({uploading:false})
     }
@@ -54,7 +60,7 @@ class Upload extends Component {
     await characteristic.addEventListener('characteristicvaluechanged', this._handleCharacteristicValueChanged);
     console.log('Device connected, listening for events...');
   } catch {
-    console.log('???')
+      this.setState({ modal: true })
   }
   }
 
@@ -71,10 +77,11 @@ class Upload extends Component {
 
   renderUploadProgress = () => {
     if(this.state.uploading === true) {
-      return (
-      <ReactLoading className="mx-16"
-       type={'spin'} color={"#51d88a"} delay={1000} height={'6em'} width={'6em'} />
-      )
+      return <div className="flex flex-col flex-wrap items-center justify-center content-center">
+          <h1>Upload In Progress . . .</h1>
+          <br />
+          <ReactLoading className="mx-16" type={"spin"} color={"#51d88a"} delay={1000} height={"6em"} width={"6em"} />
+        </div>;
     } else if(this.state.uploading === false) {
       return <button onClick={() => this.props.uploadData(this.state.activityData)}
       className="bg-green mt-4 hover:bg-green-light text-white text-xl font-bold py-2 px-6 border-b-4 border-green-dark hover:border-green rounded">
@@ -90,12 +97,23 @@ class Upload extends Component {
         </div>;
     }
   }
+  hideModal = () => {
+    this.setState({ modal: false })
+  }
+  renderModal = () => {
+    if (this.state.modal) {
+      return <ErrorModal hide={this.hideModal} />
+    } else {
+      return
+    }
+  }
 
   render() {
     // console.log(this.props)
     return <div className="min-h-screen  ">
-        <div className="infoBar text-white bg-green-light pb-2 pt-2 flex font-lg items-center justify-between px-4">
-          <h2 className="upload-info flex flex-shrink">
+    {this.renderModal()}
+        <div className="infoBar text-white bg-green-light pb-2 pt-2 flex font-lg items-center justify-between mb-8 px-4">
+          <h2 className="stream-info flex flex-shrink">
             Connect your BorkBit to upload your activity
           </h2>
           
@@ -114,20 +132,20 @@ class Upload extends Component {
             </button>
           </div>
         </div>
-        <div className="flex flex-row justify-start mt-16 ml-16">
-          <div className="upload-instructions h-full">
+        <div className="flex flex-row justify-around">
+          <div className="upload-instructions h-full w-1/3">
             <h1 className="font-bold">To Upload:</h1>
-            <p className="text-xl">
-              First, ensure your BorkBit is within range of your
+            <br />
+            <p className="text-xl font-thin">
+              1)&nbsp;Ensure your BorkBit is within range of your
               computer,and is powered on
             </p>
-            <p className="text-xl">
-              Then, simply press the connect & upload button, and save your
+            <p className="text-xl font-thin">
+              2)&nbsp;Simply press the connect & upload button, and save your
               data once the upload completes!
             </p>
           </div>
           <div className="upload-progress content-center justify-center mx-10">
-            <h1>Upload Progress:</h1>
 
             {this.renderUploadProgress()}
           </div>

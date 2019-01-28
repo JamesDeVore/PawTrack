@@ -6,8 +6,14 @@ div {
   background-color:rgb(255, 250, 245)
 }
 
+.stream-info {
+  font-size:1.5vw;
+}
 
-
+.select-mode {
+  width:10vw;
+  height:
+}
 .past-map {
   min-width:500px;
 }
@@ -33,8 +39,11 @@ div {
 }
 
 .dropdown {
-  width:10vw;
+  width:13vw;
   color:black;
+}
+.home-chart {
+  margin:4px;
 }
 
 #recentSpeed {
@@ -58,3 +67,4 @@ div {
   font-size:1.5em;
   font-weight:700;
 }
+

@@ -35,7 +35,7 @@ export default class ModeSelect extends Component {
     }
      else if(this.state.selectedOption.value > 0){
       return (
-        <button className="flex-shrink bg-orange mx-2 hover:bg-orange-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-orange-dark hover:border-orange rounded" 
+        <button className="select-mode text-sm flex-shrink h-10 bg-orange mx-2 hover:bg-orange-light text-white font-bold py-2 border-b-4 border-orange-dark hover:border-orange rounded" 
         onClick={() => this.changeBTDevice()}>
           Change Mode <FaPaperPlane />
         </button>
@@ -103,7 +103,7 @@ export default class ModeSelect extends Component {
 
   render() {
     console.log(this.props)
-    return <div className= " mode-select flex flex-row flex-shrink content-end ">
+    return <div className= " mode-select flex flex-row flex-shrink content-center ">
         <p className="mode-p font-bold mr-6">Select Mode</p>
         <Select className="dropdown flex-shrink max-w-6" options={options} value={this.state.selectedOption} onChange={this.handleChange} />
         {this.renderAccept()}

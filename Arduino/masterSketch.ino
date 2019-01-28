@@ -125,7 +125,7 @@ void setup(void)
   ble.println("initialization done. Card found, starting GPS setup");
   //GPS set up function down below
   GPSSetup();
-  ble.println("GPS se up complete");
+  ble.println("GPS set up complete");
   digitalWrite(LED_BUILTIN, HIGH);
   delay(5000);
   digitalWrite(LED_BUILTIN, LOW);
@@ -139,9 +139,8 @@ void setup(void)
 /**************************************************************************/
 void loop(void)
 {
-
   unsigned long currentMillis = millis();
-
+  //blink without delay
   if (currentMillis - previousMillis >= interval)
   {
     // save the last time you blinked the LED
@@ -152,16 +151,18 @@ void loop(void)
   Serial.println(mode);
   checkForInput();
 
+  if (mode == 1)
+  {
+    readAndSendFile();
+    mode = 0;
+  }
+
   if (mode == 2)
   {
     streamData();
   }
 
-  if (mode == 1)
-  {
-    readAndSendFile();
-  }
-  if (mode == 0)
+  if (mode == 3)
   {
     GPSReadAndLog();
   }
@@ -215,17 +216,16 @@ void streamData()
         dataString.concat(',');
         dataString.concat(currentUnixTime);
         dataString.concat('$');
+        Serial.println(dataString);
 
         for (int i = 0; i < dataString.length(); i++)
         {
           ble.print(dataString[i]);
           delay(20);
         }
-        delay(5000);
       }
     }
 }
-
 void readAndSendFile()
 {
   myFile = SD.open(fileName);
@@ -331,6 +331,7 @@ void checkForInput()
   {
     int c = ble.read();
     mode = c;
+    confirmBlink();
     setup();
   }
 }
@@ -343,5 +344,15 @@ void modeBlink()
     delay(150);
     digitalWrite(LED_BUILTIN, LOW);
     delay(150);
+  }
+}
+void confirmBlink()
+{
+  for (int i = 0; i < 2; i++)
+  {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(1000);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(1000);
   }
 }

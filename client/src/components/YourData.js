@@ -54,14 +54,14 @@ export class YourData extends Component {
         }
       })
 
-      return <div className="recentActivity flex flex-column ">
+      return <div className=" bg-blue-lightest recentActivity flex flex-column pb-12 ">
           <h1 className="font-bold">Recent Activity:</h1>
-          <br />
-          <h3 className="font-thin ">
+  
+          <h1 className="font-thin ">
             {moment(this.props.recent.date).format("MMMM Do, h:mm a")}
-          </h3>
+          </h1>
           <RecentStatsAndMap className="recent-stats  ">
-            <div className=" recentMap mr-8">
+            <div className=" recentMap mr-4 ml-4 w-1/6">
               <MapItem coordinates={this.props.recent.coordinates} />
             </div>
             <Stats className="ml-8">
@@ -85,7 +85,7 @@ export class YourData extends Component {
                 </span>
               </h3>
             </Stats>
-
+            <div className="charts flex-row flex justify-center flex-wrap">
             <div>
               <h3 className="font-thin no-tick ">Speed:</h3>
               <div id="recentSpeed" />
@@ -94,6 +94,12 @@ export class YourData extends Component {
               <h3 className="font-thin no-tick">Altitude:</h3>
               <div id="recentAltitude" />
             </div>
+          <div className="content-center justify-center w-full">
+            <h3 className="font-thin">Total Calories Burned:</h3>
+            <h2 className=" font-semibold text-4xl text-orange-dark">{this.props.recent.calories}</h2>
+            </div>
+          </div>
+            
           </RecentStatsAndMap>
         </div>;
     } else {

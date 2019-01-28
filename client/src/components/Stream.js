@@ -5,6 +5,7 @@ import Data from './StreamData'
 import * as actions from "../actions";
 import { FaGlobe, FaBan } from "react-icons/fa";
 import ModeSelect from "./ModeSelect";
+import ErrorModal from './ErrorModal'
 
 
 
@@ -13,7 +14,8 @@ class Stream extends Component {
   constructor(props){
     super(props)
     this.state = {
-      device:null
+      device:null,
+      modal:false
     }
   }
 
@@ -38,23 +40,34 @@ class Stream extends Component {
     await characteristic.addEventListener('characteristicvaluechanged',this._handleCharacteristicValueChanged);
     console.log('Device connected, listening for events...');
   } catch {
-    console.log("????")
+    this.setState({modal:true})
   }
   }
   disconnectBTDevice = () => {
     window.location.reload()
+  }
+  hideModal = () => {
+    this.setState({modal:false})
+  }
+  renderModal = () => {
+    if(this.state.modal){
+     return <ErrorModal hide={this.hideModal} />
+    } else {
+      return
+    }
   }
 
 render() {
   // console.log(this.props)
   return (
     <div>
+      {this.renderModal()}
       <div className="infoBar text-white bg-green-light h-16 flex font-lg items-center justify-between px-4">
-      <h2 className="stream-info">Connect your BorkBit and track your location live!</h2>
+        <h2 className="stream-info w-2/5">Connect your BorkBit and track your location live!</h2>
       <ModeSelect />
-      <div>
-        <button className="bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" onClick={() => this.connectBTDevice()}>Connect <FaGlobe /></button>
-        <button className="bg-red mx-2 hover:bg-red-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-red-dark hover:border-red rounded" onClick={() => this.disconnectBTDevice()}>Disconnect <FaBan /></button>
+      <div className="flex-row flex h-12">
+        <button className="flex-shrink text-sm bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" onClick={() => this.connectBTDevice()}>Connect <FaGlobe /></button>
+        <button className="flex-shrink text-sm bg-red mx-2 hover:bg-red-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-red-dark hover:border-red rounded" onClick={() => this.disconnectBTDevice()}>Disconnect <FaBan /></button>
        </div>
       </div>
       <Data  />

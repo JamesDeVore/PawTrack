@@ -74,6 +74,7 @@ export const fetchMostRecentData = () => async dispatch => {
   })
   recievedData.totalDistanceM = calculateTotalDistance(recievedData.coordinates)
   recievedData.averageSpeedMPH = calculateAvgSpeed(recievedData.speed)
+  recievedData.calories = Math.round(recievedData.totalDistanceM * 30)
   console.log(recievedData)
   dispatch({ type: FETCH_RECENT, payload: recievedData })
 

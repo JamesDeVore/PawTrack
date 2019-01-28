@@ -98,7 +98,7 @@ export class Home extends Component {
         type: 'gauge',
       },
       transition: {
-        duration: 1000
+        duration: 4000
       },
       gauge: {
         label: {
@@ -118,7 +118,7 @@ export class Home extends Component {
         threshold: {
           unit: 'value', // percentage is default
           //            max: 200, // 100 is default
-          values: [totalDistance / 4, totalDistance / 2, 3 * totalDistance / 4, totalDistance]
+          values: [totalDistance]
         }
       },
       size: {
@@ -150,12 +150,12 @@ export class Home extends Component {
   render() {
     if (this.props.dash.totalDistanceOverall) {
       return <div className="">
-          <div className="infoBar text-white bg-green-light h-16 flex font-lg items-center justify-between px-4">
-            <h2 className="stream-info w-1/2 font-sm">
+          <div className="infoBar text-white bg-green-light h-16 flex items-center justify-between">
+            <h2 className="stream-info w-2/5 ">
               Connect your BorkBit to track and upload data!
             </h2>
             <ModeSelect />
-            <div>
+            <div className="no-wrap">
               <button className="bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" onClick={() => this.connectBTDevice()}>
                 Connect <FaGlobe />
               </button>
@@ -167,16 +167,16 @@ export class Home extends Component {
           {/* <MyCarousel /> */}
         <h1 className=" text-6xl text-blue-dark font-bold">Welcome Back!</h1>
           <p className="font-thin text-2xl">Here is your progress so far!</p>
-          <div className="flex flex-row charts items-center text-center justify-between mx-8">
-            <div className="cal-display shadow px-12">
+          <div className="flex flex-row charts items-center text-center content-center justify-between mx-8">
+            <div className="home-chart cal-display shadow px-6">
               <h1>Total Calories:</h1>
               <div id="calories" />
             </div>
-            <div className="distance-display shadow px-12">
+          <div className=" home-chart distance-display shadow px-12">
               <h1>Recent Trends:</h1>
               <div id="totalDistance" />
             </div>
-            <div className="flex flex-col shadow px-12">
+          <div className="home-chart flex flex-col shadow px-12">
               <h1>Total Distance:</h1>
               <h3>
                 {Math.round(this.props.dash.totalDistanceOverall * 100) /
