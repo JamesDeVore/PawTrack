@@ -4,6 +4,8 @@ import moment from 'moment';
 import C3Chart from "react-c3js";
 import { C3Speed, C3Past, C3Altitude } from '../utils/C3';
 import c3 from 'c3'
+import CalorieCountup from "./CalorieCountup";
+
 
 
 export default class PastActivity extends Component {
@@ -55,16 +57,15 @@ export default class PastActivity extends Component {
               {Math.round(averageSpeedMPH * 100) / 100} mph
             </h3>
           </div>
-          <div className="shadow pt-4 flex flex-row flex-wrap rounded border">
+          <div className="shadow pt-4 flex flex-row flex-wrap justify-center rounded border">
             <div className="ml-2 mr-2">
               <C3Chart className="no-tick" data={data} size={C3Past.size} axis={C3Speed.axis} point={{ r: 0 }} tooltip={tooltip} />
             </div>
             <div className="ml-2 mr-2">
               <C3Chart className="no-tick" data={altData} size={C3Past.size} axis={C3Altitude.axis} point={{ r: 0 }} tooltip={tooltip} />
             </div>
-            <div className="content-center justify-center w-full">
-              <h3 className="font-thin">Total Calories Burned:</h3>
-              <h2 className=" font-semibold text-4xl text-orange-dark">{calories}</h2>
+            <div className="content-center justify-center">
+              <CalorieCountup calories={calories} />
             </div>
           </div>
         </div>

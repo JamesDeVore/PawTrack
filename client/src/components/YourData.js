@@ -9,6 +9,7 @@ import moment from 'moment'
 import PastActivityItem from './PastActivityItem'
 import { C3Speed, C3Altitude } from '../utils/C3'
 import c3 from 'c3'
+import CalorieCountup from './CalorieCountup'
 
 
 export class YourData extends Component {
@@ -94,10 +95,8 @@ export class YourData extends Component {
               <h3 className="font-thin no-tick">Altitude:</h3>
               <div id="recentAltitude" />
             </div>
-          <div className="content-center justify-center w-full">
-            <h3 className="font-thin">Total Calories Burned:</h3>
-            <h2 className=" font-semibold text-4xl text-orange-dark">{this.props.recent.calories}</h2>
-            </div>
+            <CalorieCountup calories={this.props.recent.calories} />
+
           </div>
             
           </RecentStatsAndMap>

@@ -156,12 +156,6 @@ export class Home extends Component {
             </h2>
             <ModeSelect />
             <div className="no-wrap">
-              <button className="bg-blue mx-2 hover:bg-blue-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-blue-dark hover:border-blue rounded" onClick={() => this.connectBTDevice()}>
-                Connect <FaGlobe />
-              </button>
-              <button className="bg-red mx-2 hover:bg-red-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-red-dark hover:border-red rounded" onClick={() => this.disconnectBTDevice()}>
-                Disconnect <FaBan />
-              </button>
             </div>
           </div>
           {/* <MyCarousel /> */}
