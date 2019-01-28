@@ -3,29 +3,17 @@ import { FaPaw } from 'react-icons/fa';
 
 
 export default class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
   render() {
-    return <nav className="flex items-center justify-between flex-wrap bg-blue-light p-4">
+    return <nav className="flex items-center justify-between flex-wrap bg-blue-light p-2">
         <div className="flex flex-col content-center flex-no-shrink text-white mr-6">
           <span className="font-bold text-xl tracking-light items-senter">
             <FaPaw /> &nbsp;
-            <a href="/" className="font-semibold text-xl text-white tracking-tight ">
+            <a href="/" className="font-semibold text-2xl text-white tracking-tight ">
               PawTrack
             </a>
           </span>
-          <p className="font-thin text-white pb-0">'Run, Myrah, Run!'</p>
+          <p className="font-thin text-lg text-white pb-0">'Run, Myrah, Run!'</p>
         </div>
         <div className="block lg:hidden">
           <button className="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white">

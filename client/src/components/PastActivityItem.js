@@ -3,11 +3,12 @@ import MapItem from "./map";
 import moment from 'moment';
 import C3Chart from "react-c3js";
 import { C3Speed, C3Past, C3Altitude } from '../utils/C3';
-import c3 from 'c3'
 import CalorieCountup from "./CalorieCountup";
 
 
-
+/*=====================================================
+individual past activity display, to be mapped over
+=====================================================*/
 export default class PastActivity extends Component {
   constructor(props){
     super(props)
@@ -37,9 +38,9 @@ export default class PastActivity extends Component {
     const altData = { columns: [altitude], colors: { Altitude: "#4252E5" } };
 
     
-    return <div className="recentActivity ">
+    return <div className="recentActivity m-4 ">
         <div>
-          <h1 className="font-thin items-center mb-6 mr-8">
+          <h1 className="font-thin items-center mb-10 mr-8">
             {moment(date).format("MMMM Do, h:mm a")}
           </h1>
         </div>
@@ -47,25 +48,30 @@ export default class PastActivity extends Component {
           <div className="past-map ml-10 mr-10 w-1/6">
             <MapItem coordinates={coordinates} />
           </div>
-          <div className=" flex-col">
-            <h3 className="font-thin">Total Distance:</h3>
-            <h3 className="font-semibold text-2xl">
+          <div className=" flex-col mr-10 justify-between">
+            <h2 className="font-semibold">Total Distance:</h2>
+            <h2 className="font-thin text-2xl">
               {Math.round(totalDistanceM * 100) / 100} miles
-            </h3>
-            <h3 className="font-thin"> Average Speed:</h3>
-            <h3 className="font-semibold text-2xl">
+            </h2>
+            <hr />
+            <h2 className="font-semibold"> Average Speed:</h2>
+            <h2 className="font-thin text-2xl">
               {Math.round(averageSpeedMPH * 100) / 100} mph
-            </h3>
+            </h2>
+          <CalorieCountup calories={calories} />
           </div>
-          <div className="shadow pt-4 flex flex-row flex-wrap justify-center rounded border">
+          <div className="shadow pt-4 flex w-1/3 flex-col flex-wrap justify-center rounded border">
+          <div className="flex flex-row justify-center">
             <div className="ml-2 mr-2">
               <C3Chart className="no-tick" data={data} size={C3Past.size} axis={C3Speed.axis} point={{ r: 0 }} tooltip={tooltip} />
             </div>
             <div className="ml-2 mr-2">
               <C3Chart className="no-tick" data={altData} size={C3Past.size} axis={C3Altitude.axis} point={{ r: 0 }} tooltip={tooltip} />
             </div>
-            <div className="content-center justify-center">
-              <CalorieCountup calories={calories} />
+           
+          </div>
+          <div className=" content-center flex flex-col justify-center ">
+          
             </div>
           </div>
         </div>

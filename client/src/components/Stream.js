@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Data from './StreamData'
 import * as actions from "../actions";
 import { FaGlobe, FaBan } from "react-icons/fa";
 import ModeSelect from "./ModeSelect";
 import ErrorModal from './ErrorModal'
-
-
-
 
 class Stream extends Component {
   constructor(props){
@@ -20,8 +16,7 @@ class Stream extends Component {
   }
 
   _handleCharacteristicValueChanged = (event) => {
-    
-
+    //the action that gets dispatched over and over and over and over
     this.props.streamData(event);
   }
   connectBTDevice = async () => {
@@ -35,6 +30,8 @@ class Stream extends Component {
     
     let server = await device.gatt.connect();
     let service = await server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e')
+    //this characteristic "sends data" by sending notifications and including the values AS the notifications
+    //not in the actual data it sends
     let characteristic = await service.getCharacteristic('6e400003-b5a3-f393-e0a9-e50e24dcca9e')
     await characteristic.startNotifications()
     await characteristic.addEventListener('characteristicvaluechanged',this._handleCharacteristicValueChanged);
@@ -44,6 +41,7 @@ class Stream extends Component {
   }
   }
   disconnectBTDevice = () => {
+    // easiest and simplest way to disconnect a device
     window.location.reload()
   }
   hideModal = () => {
@@ -58,7 +56,6 @@ class Stream extends Component {
   }
 
 render() {
-  // console.log(this.props)
   return (
     <div>
       {this.renderModal()}

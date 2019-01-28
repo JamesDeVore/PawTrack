@@ -19,7 +19,7 @@ exports.calculateTotalDistance = coordsArray => {
    
     totalDistanceInKm = totalDistanceInKm + d;
   }
-  let totalDistanceInMiles = (totalDistanceInKm/1.609)
+  let totalDistanceInMiles = (totalDistanceInKm/1.609) //convert to miles
   return totalDistanceInMiles;
 };
 
@@ -38,4 +38,25 @@ exports.remove$FromCoords = element => {
   newDataArray.push(parseFloat(element[0]['$numberDecimal']));
   newDataArray.push(parseFloat(element[1]['$numberDecimal']));
   return newDataArray
+}
+
+//functions to be passed into the array.reduce 
+exports.sumTotalDistance = (total, currentVal) => {
+  return total + parseFloat(currentVal.totalDistanceM)
+}
+
+exports.findFastestPace = (total, currentVal) => {
+  if (currentVal.pace > total.pace) {
+    return currentVal
+  } else {
+    return total
+  }
+}
+
+exports.sumTotalCalories = (total, currentVal) => {
+  return total + parseInt(currentVal.calories)
+}
+
+exports.findAverageSpeed = (total, currentVal) => {
+  return total + parseFloat(currentVal.averageSpeedMPH)
 }

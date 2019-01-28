@@ -17,8 +17,8 @@
 #define MODE_LED_BEHAVIOUR "MODE"
 
 Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
-//*** SD STUFF ***
 
+//file name to save GPS data
 String fileName = "GPSDATA.TXT";
 
 //start the file Object
@@ -29,10 +29,9 @@ File myFile;
 uint8_t readPacket(Adafruit_BLE *ble, uint16_t timeout);
 float parsefloat(uint8_t *buffer);
 void printHex(const uint8_t *data, const uint32_t numBytes);
-
 extern uint8_t packetbuffer[];
 
-//RTC
+//RTC object
 
 RTC_PCF8523 rtc;
 
@@ -42,13 +41,13 @@ static const uint32_t GPSBaud = 9600;
 // The TinyGPS++ object
 TinyGPSPlus gps;
 
-//other helpers
+//other helpers for blink without delay
 unsigned long previousMillis = 0;
 
 const long interval = 1000;
-
+//manages what the unit is actually doing
 int mode = 0;
-
+//for the timer function
 long number = 0;
 
 void setup(void)
@@ -232,6 +231,11 @@ void readAndSendFile()
   if (myFile)
   {
     Serial.println("opened dataFile, attempting to send data");
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(2000);
+    ble.print("@");
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(2000);
 
     // read from the file until there's nothing else in it:
     while (myFile.available())

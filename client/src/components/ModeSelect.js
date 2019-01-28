@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
 import Select from "react-select";
-import { FaSave, FaBan, FaPaperPlane } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
+import ErrorModal from "./ErrorModal";
 
+/*=====================================================
+handles all browser -> borkbit communication.
+the characteristic here (6e400002-b5a3-f393-e0a9-e50e24dcca9e)
+is the characteristic the unit has for recieving information
+=====================================================*/
 
 const options = [
   { value: 1 , label: 'Upload Data' },
@@ -16,7 +22,8 @@ export default class ModeSelect extends Component {
     this.state = {
       selectedOption:{value:0},
       characteristic:null,
-      currentMode:null
+      currentMode:null,
+      errorModal:false,
     }
   }
   handleChange = (selectedOption) => {
@@ -25,6 +32,7 @@ export default class ModeSelect extends Component {
   }
   renderAccept = () => {
     if(this.state.selectedOption.value === 5){
+      //currently unused, no way for arduino to boadcast its mode without interfereing with upload and stream
       return <div>
           <button className="flex-shrink bg-blue mx-2 hover:bg-orange-light text-white font-bold py-2 pl-2 pr-2 border-b-4 border-orange-dark hover:border-orange rounded" 
           onClick={() => this.checkMode()}>
@@ -45,7 +53,6 @@ export default class ModeSelect extends Component {
 
   _handleCharacteristicValueChanged = (event) => {
     //this function reads the incoming bytes
-    // console.log(event)
     let buffer = event.target.value.buffer;
     var dataView = new DataView(buffer);
     let data = "";
@@ -57,7 +64,6 @@ export default class ModeSelect extends Component {
     console.log(data)
     let currentMode = options.find(option => option.value == data);
     this.setState({currentMode:currentMode.label})
-    
   }
 
   changeBTDevice = async () => {
@@ -74,10 +80,10 @@ export default class ModeSelect extends Component {
       await characteristic.writeValue(Uint8Array.of(parseInt(this.state.selectedOption.value)))
       // window.location.reload()
     } catch {
- 
+   this.setState({ errorModal: true })
     }
   }
-
+//unused function to keep track of mode
   checkMode = async () => {
     try {
       let options = {
@@ -97,13 +103,25 @@ export default class ModeSelect extends Component {
       console.log('Device connected, listening for events...');
       // window.location.reload()
     } catch {
-      console.log("Stack trace error")
+      this.setState({ errorModal: true })
+    }
+  }
+//error modal handling
+  hideModal = () => {
+    this.setState({ modal: false })
+  }
+  renderModal = () => {
+    if (this.state.errorModal) {
+      return <ErrorModal hide={this.hideModal} />
+    } else {
+      return
     }
   }
 
   render() {
     console.log(this.props)
     return <div className= " mode-select flex flex-row flex-shrink content-center ">
+      {this.renderModal()}
         <p className="mode-p font-bold mr-6">Select Mode</p>
         <Select className="dropdown flex-shrink max-w-6" options={options} value={this.state.selectedOption} onChange={this.handleChange} />
         {this.renderAccept()}

@@ -1,8 +1,5 @@
 //externals
-import ReactDOM from 'react-dom';
 import React from 'react';
-import Feature from "ol/Feature";
-import LineString from "ol/geom/LineString";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 
@@ -10,7 +7,7 @@ import * as actions from "../actions";
 var ol = require('openlayers');
 require('openlayers/css/ol.css');
 
-//This component requires Coordinatess to be in props
+//This component requires Coordinates to be in props
 class MapItem extends React.Component {
   constructor(props) {
     super(props);
@@ -21,13 +18,10 @@ class MapItem extends React.Component {
     };
 
   }
-
-
   /*=====================================================
   currently loading data??????
   =====================================================*/
   componentDidMount() {
-console.log('MAP MOUNTED')
     let tile_layer = new ol.layer.Tile({ source: new ol.source.OSM() });
 
     // create map object with feature layer
@@ -39,7 +33,7 @@ console.log('MAP MOUNTED')
       ]
     });
 
-
+//save map on state to allow modifications or other interactions
     this.setState({
       map: map
         });
@@ -48,11 +42,13 @@ console.log('MAP MOUNTED')
     // save map and layer references to local state
   }
   componentDidUpdate(prevProps, prevState) {
+    //drawing the line on the map
+    //component updates when the coodinate data comes in after the fetch
     let tile_layer = new ol.layer.Tile({ source: new ol.source.OSM() })
     var linestring_feature = new ol.Feature({
       geometry: new ol.geom.LineString(this.props.coordinates)
     });
-
+    //openlayers layer construction. needs tile layers, features, vector layers
     var featuresLayer = new ol.layer.Vector({
       source: new ol.source.Vector({
         features: [linestring_feature]
@@ -82,15 +78,14 @@ console.log('MAP MOUNTED')
     featuresLayer.setZIndex(10);
 
     this.state.map.addLayer(tile_layer);
+    //prevent crashes?
     if (this.props.coordinates.length > 1) {
-      console.log(featuresLayer)
       this.state.map.addLayer(featuresLayer)
       this.state.map.setView(new ol.View({
           center: ol.proj.fromLonLat([this.props.coordinates[0][0], this.props.coordinates[0][1]]), //Durham
           zoom: 15
         }));
     }
-
   }
 
 
@@ -98,11 +93,6 @@ console.log('MAP MOUNTED')
     return <div className=" shadow border-grey rounded-lg border-2 map-item" ref="mapContainer"> </div>;
   }
 }
-
-const mapStateToProps = ({  }) => {
-  return {  };
-};
-
 export default
   connect(
     null,

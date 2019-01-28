@@ -9,6 +9,9 @@ div {
 .stream-info {
   font-size:1.5vw;
 }
+.stream-map {
+  max-height: 70vh;
+}
 
 .select-mode {
   width:10vw;
@@ -67,4 +70,14 @@ div {
   font-size:1.5em;
   font-weight:700;
 }
-
+.cal-counter {
+  padding:10px;
+  box-sizing:border-box;
+  /* border:5px solid #DAE1E7; */
+  border-radius:16px;
+}
+.cal-bar {
+  text-align: center;
+  align-content: center;
+  min-width:100%
+}

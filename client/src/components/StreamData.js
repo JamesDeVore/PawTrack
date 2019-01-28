@@ -160,7 +160,7 @@ addPointToMap = () => {
   render() {
     let {lat, lng} = this.props.stream;
     return <div className="flex flex-shrink mt-12 ml-12 w-full flex-row min-h-screen pb-16 px-auto">
-        <div className=" w-1/2 min-h-24 shadow border-grey rounded-lg border-2 map-item" ref="streamMap" />
+        <div className=" w-1/2 stream-map shadow border-grey rounded-lg border-2 map-item" ref="streamMap" />
         <div className="mb-8 px-8 mt-8 ">
           <h2 className="font-xl px-4 shadow font-bold rounded-lg leading-loose">
             Latitude: &nbsp;{lat} &#176;

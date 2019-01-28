@@ -28,8 +28,8 @@ export const C3Speed = {
     }
   },
   size:{
-    width:200,
-    height:200
+    width:250,
+    height:250
   },
 
 }
