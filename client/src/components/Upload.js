@@ -83,7 +83,7 @@ class Upload extends Component {
           <ReactLoading className="mx-16" type={"spin"} color={"#51d88a"} delay={1000} height={"6em"} width={"6em"} />
         </div>;
     } else if(this.state.uploading === false) {
-      return <button onClick={() => this.props.uploadData(this.state.activityData)}
+      return <button onClick={() => this.saveAndSubmitData()}
       className="bg-green mt-4 hover:bg-green-light text-white text-xl font-bold py-2 px-6 border-b-4 border-green-dark hover:border-green rounded">
           Save Data <FaSave />
         </button>;
@@ -138,7 +138,7 @@ class Upload extends Component {
             <br />
             <p className="text-xl font-thin">
               1)&nbsp;Ensure your BorkBit is within range of your
-              computer,and is powered on
+              computer, and is powered on
             </p>
             <p className="text-xl font-thin">
               2)&nbsp;Simply press the connect & upload button, and save your

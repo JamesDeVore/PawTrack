@@ -78,7 +78,7 @@ export default class ModeSelect extends Component {
       let service = await server.getPrimaryService('6e400001-b5a3-f393-e0a9-e50e24dcca9e')
       let characteristic = await service.getCharacteristic('6e400002-b5a3-f393-e0a9-e50e24dcca9e')
       await characteristic.writeValue(Uint8Array.of(parseInt(this.state.selectedOption.value)))
-      // window.location.reload()
+   this.setState({ selectedOption: { value: 0 }})
     } catch {
    this.setState({ errorModal: true })
     }
@@ -123,7 +123,7 @@ export default class ModeSelect extends Component {
     return <div className= " mode-select flex flex-row flex-shrink content-center ">
       {this.renderModal()}
         <p className="mode-p font-bold mr-6">Select Mode</p>
-        <Select className="dropdown flex-shrink max-w-6" options={options} value={this.state.selectedOption} onChange={this.handleChange} />
+      <Select className="dropdown flex-shrink max-w-6" options={options} value={this.state.selectedOption} onChange={this.handleChange} />
         {this.renderAccept()}
       </div>;
   }
