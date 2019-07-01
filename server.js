@@ -31,7 +31,7 @@ and a whole lot more
 =====================================================*/
 
 routes(app)
-
-app.listen(process.ENV.PORT || 8000, () => console.log('Listening on port 8000'))
+let port = process.env.PORT || 5000
+app.listen(port, () => console.log(`Listening on port ${port}`))
 
 module.exports = app;
