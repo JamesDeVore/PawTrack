@@ -8,7 +8,10 @@ const cors = require("cors");
 const mongoose = require('mongoose')
 // const formidableMiddleware = require("express-formidable");
 
-mongoose.connect('mongodb://localhost/fitBark', { useNewUrlParser: true })
+mongoose.connect(
+  `mongodb://james:password1@ds245677.mlab.com:45677/pawtrack`,
+  { useNewUrlParser: true }
+);
 
 //Routes
 const routes = require('./routes/index')
