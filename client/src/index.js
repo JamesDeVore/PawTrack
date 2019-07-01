@@ -7,9 +7,11 @@ import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/rootReducer";
 import logger from 'redux-logger';
 import App from './App'
-import "bootstrap/dist/css/bootstrap.css";
-import "./App.css";
 
+import "bootstrap/dist/css/bootstrap.css";
+
+import "./App.css";
+// import "./css/tailwind.css";
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk,logger));
 

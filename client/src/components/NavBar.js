@@ -26,13 +26,13 @@ export default class NavBar extends React.Component {
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-md lg:flex-grow" />
           <div>
-            <a href="/stream" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
+            <a href="/stream" className="inline-block text-black font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
               Stream Activity Live!
             </a>
-            <a href="/upload" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
+            <a href="/upload" className="inline-block text-black font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
               Upload Activity
             </a>
-            <a href="/data" className="inline-block font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
+            <a href="/data" className="inline-block text-black font-semibold text-md px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-black hover:bg-green-light mt-2 mr-1  ml-1 lg:mt-0">
               Your Past Activities
             </a>
           </div>

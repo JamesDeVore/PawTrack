@@ -1,9 +1,19 @@
 div {
   text-align: center;
-
+  
 }
 #root {
   background-color:rgb(255, 250, 245)
+  
+}
+nav {
+  background-color:rgb(80, 126, 194);
+}
+.infoBar {
+  background-color:rgb(117, 216, 138)
+}
+a {
+  color:black !important;
 }
 
 .stream-info {
@@ -15,7 +25,7 @@ div {
 
 .select-mode {
   width:10vw;
-  height:
+  background-color:rgb(207, 161, 74);
 }
 .past-map {
   min-width:500px;
@@ -27,9 +37,9 @@ div {
 .record {
   	text-shadow:
 		-1px -1px 0 rgb(83, 83, 83),
-		1px -1px 0 #rgb(83, 83, 83),
-		-1px 1px 0 #rgb(83, 83, 83),
-		1px 1px 0 #rgb(83, 83, 83);
+		1px -1px 0 rgb(83, 83, 83),
+		-1px 1px 0 rgb(83, 83, 83),
+		1px 1px 0 rgb(83, 83, 83);
 }
 
 .c3-axis-y-label, .c3-axis-y2-label{
