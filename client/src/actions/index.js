@@ -3,7 +3,7 @@ import {calculateTotalDistance, calculateAvgSpeed, remove$FromCoords, sumTotalDi
 
 //this is the data for the main page, it includes data totals and other aggregations
 export const fetchDashData = () => async dispatch => {
-  let data = await fetch('http://localhost:8000/me/dashboard')
+  let data = await fetch('me/dashboard')
   let recievedData = await data.json();
   //now I need to parse the incoming data, because it comes with strange formatting (coords are 'Decimal$128)
   //./utils holds most of these functions
@@ -27,7 +27,7 @@ export const fetchDashData = () => async dispatch => {
 
 //this fetches all activities as an array of activity objects
 export const fetchAllData = () => async dispatch => {
- let data = await fetch('http://localhost:8000/me/data')
+ let data = await fetch('me/data')
  let recievedData = await data.json();
  //similar formatting to dashData
  recievedData.forEach(dataObj => {
@@ -44,7 +44,7 @@ export const fetchAllData = () => async dispatch => {
 
 export const fetchMostRecentData = () => async dispatch => {
 //only returns the most recently added data object.
-  let data = await fetch('http://localhost:8000/me/recentData')
+  let data = await fetch('me/recentData')
   let recievedData = await data.json();
    recievedData.coordinates = recievedData.coordinates.map(element => {
     let newDataArray = [];
@@ -80,7 +80,7 @@ export const streamData = streamByte => dispatch => {
 
 export const uploadData = activityData => dispatch => {
   //send the huge string to the server
-  fetch('http://localhost:8000/me/upload', {
+  fetch('me/upload', {
     method:'POST',
     body:JSON.stringify({
       data:activityData
