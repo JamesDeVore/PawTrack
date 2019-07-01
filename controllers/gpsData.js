@@ -11,6 +11,7 @@ exports.getAllGPSData = async (req,res) => {
 //this will include the most recent, be sure to shift it later
   let allRuns = await Run.find({}, {}, { sort: { 'date': -1 } });
   let allFormattedRuns = allRuns.map(run => _formatData(run));
+  console.log(allFormattedRuns)
   res.send(allFormattedRuns)
 }
 
